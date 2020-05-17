@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ognice.dao.InorderMapper">
+	<resultMap id="BaseResultMap" type="com.ognice.domain.Inorder">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="cangkuid" property="cangkuid" jdbcType="INTEGER" />
+		<result column="cangkuname" property="cangkuname" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="count" property="count" jdbcType="INTEGER" />
+		<result column="materidd" property="materidd" jdbcType="INTEGER" />
+		<result column="proidd" property="proidd" jdbcType="INTEGER" />
+		<result column="created" property="created" jdbcType="TIMESTAMP" />
+		<result column="customerid" property="customerid" jdbcType="INTEGER" />
+		<result column="customername" property="customername" jdbcType="VARCHAR" />
+		<result column="year" property="year" jdbcType="INTEGER" />
+		<result column="month" property="month" jdbcType="INTEGER" />
+		<result column="total" property="total" jdbcType="DOUBLE" />
+	</resultMap>
+	<sql id="Base_Column_List">
+		`id`
+		,
+		`cangkuid`
+		,
+		`cangkuname`
+		,
+		`name`
+		,
+		`count`
+		,
+		`materidd`
+		,
+		`proidd`
+		,
+		`created`
+		,
+		`customerid`
+		,
+		`customername`
+		,
+		`year`
+		,
+		`month`
+		,
+		`total`
+		
+	</sql>
+	<select id="selectInorderById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+		select
+		<include refid="Base_Column_List" />
+		from `inorder` where id = #{id,jdbcType=INTEGER}
+	</select>
+	<select id="page" parameterType="com.ognice.controller.common.PageSearchParam" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List" />
+		from `inorder` where 1=1
+		<if test="params!=null">
+		<if test="params.id !=null ">
+		AND `id` = #{params.id}
+		</if>
+		<if test="params.cangkuid !=null ">
+		AND `cangkuid` = #{params.cangkuid}
+		</if>
+		<if test="params.cangkuname !=null and params.cangkuname!=''">
+		 AND `cangkuname` like concat('%',#{params.cangkuname},'%')
+		</if>
+		<if test="params.name !=null and params.name!=''">
+		 AND `name` like concat('%',#{params.name},'%')
+		</if>
+		<if test="params.count !=null ">
+		AND `count` = #{params.count}
+		</if>
+		<if test="params.materidd !=null ">
+		AND `materidd` = #{params.materidd}
+		</if>
+		<if test="params.proidd !=null ">
+		AND `proidd` = #{params.proidd}
+		</if>
+		<if test="params.created !=null ">
+		AND `created` = #{params.created}
+		</if>
+		<if test="params.customerid !=null ">
+		AND `customerid` = #{params.customerid}
+		</if>
+		<if test="params.customername !=null and params.customername!=''">
+		 AND `customername` like concat('%',#{params.customername},'%')
+		</if>
+		<if test="params.year !=null ">
+		AND `year` = #{params.year}
+		</if>
+		<if test="params.month !=null ">
+		AND `month` = #{params.month}
+		</if>
+		<if test="params.total !=null ">
+		AND `total` = #{params.total}
+		</if>
+		</if>
+		order by id desc
+		<if test="page!=null"> limit #{page},#{pagesize}
+		</if>
+	</select>
+
+	<delete id="delete" parameterType="java.lang.Integer"> delete from `inorder` where id = #{id,jdbcType=INTEGER}
+	</delete>
+	<insert id="insert" parameterType="com.ognice.domain.Inorder"> insert into `inorder` (
+		`id`,`cangkuid`,`cangkuname`,`name`,`count`,`materidd`,`proidd`,`created`,`customerid`,
+		`customername`,`year`,`month`,`total`		
+	) values (
+		#{id,jdbcType=INTEGER},
+		#{cangkuid,jdbcType=INTEGER},
+		#{cangkuname,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{count,jdbcType=INTEGER},
+		#{materidd,jdbcType=INTEGER},
+		#{proidd,jdbcType=INTEGER},
+		#{created,jdbcType=TIMESTAMP},
+		#{customerid,jdbcType=INTEGER},
+		#{customername,jdbcType=VARCHAR},
+		#{year,jdbcType=INTEGER},
+		#{month,jdbcType=INTEGER},
+		#{total,jdbcType=DOUBLE}	
+	)
+	</insert>
+
+	<update id="update" parameterType="com.ognice.domain.Inorder">
+		update `inorder`
+		<set>
+		<if test="id != null">
+		`id`= #{id,jdbcType=INTEGER},
+		</if>
+		<if test="cangkuid != null">
+		`cangkuid`= #{cangkuid,jdbcType=INTEGER},
+		</if>
+		<if test="cangkuname != null">
+		`cangkuname`= #{cangkuname,jdbcType=VARCHAR},
+		</if>
+		<if test="name != null">
+		`name`= #{name,jdbcType=VARCHAR},
+		</if>
+		<if test="count != null">
+		`count`= #{count,jdbcType=INTEGER},
+		</if>
+		<if test="materidd != null">
+		`materidd`= #{materidd,jdbcType=INTEGER},
+		</if>
+		<if test="proidd != null">
+		`proidd`= #{proidd,jdbcType=INTEGER},
+		</if>
+		<if test="created != null">
+		`created`= #{created,jdbcType=TIMESTAMP},
+		</if>
+		<if test="customerid != null">
+		`customerid`= #{customerid,jdbcType=INTEGER},
+		</if>
+		<if test="customername != null">
+		`customername`= #{customername,jdbcType=VARCHAR},
+		</if>
+		<if test="year != null">
+		`year`= #{year,jdbcType=INTEGER},
+		</if>
+		<if test="month != null">
+		`month`= #{month,jdbcType=INTEGER},
+		</if>
+		<if test="total != null">
+		`total`= #{total,jdbcType=DOUBLE},
+		</if>
+		</set>
+		where id = #{id,jdbcType=INTEGER}
+	</update>
+
+</mapper>
